@@ -1,0 +1,24 @@
+{
+  "name": "urban-web",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Urban Web — Open Mobility for Cities",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnavsahni53-cell/Urban-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnavsahni53-cell/Urban-Web/issues"
+  },
+  "homepage": "https://github.com/arnavsahni53-cell/Urban-Web#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}

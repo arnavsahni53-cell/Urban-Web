@@ -1,6 +1,12 @@
 'use strict';
 
 // ─────────────────────────────────────────────
+// VERCEL WEB ANALYTICS
+// ─────────────────────────────────────────────
+import { inject } from '@vercel/analytics';
+inject();
+
+// ─────────────────────────────────────────────
 // HERO CIVIC CANVAS — distributed mesh network
 // ─────────────────────────────────────────────
 function initHeroCivicCanvas() {
