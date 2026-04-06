@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Urban Web connects every mode of transport in your city into one open network — so residents move freely, and cities see what's working.">
+  <title>Urban Web — Open Mobility for Cities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="brand_assets/Logo.png" alt="Urban Web" height="32">
+      </a>
+      <div class="nav-partners">
+        <span>A program by</span>
+        <strong>Networks for Humanity</strong>
+        <span>&amp;</span>
+        <strong>World Resources Institute</strong>
+      </div>
+      <a href="#contact" class="btn-nav">Get in touch</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="Content/Background_Video_with_Blue_Tint.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-video-mask"></div>
+    <div class="hero-content">
+      <div class="hero-label">Urban Web</div>
+      <h1 class="hero-headline">
+        Your city's mobility<br>
+        is more capable<br>
+        <em>than it knows.</em>
+      </h1>
+      <p class="hero-sub">
+        Transit operators, parking owners, hospitals, employers — each doing their part, none of them connected. Urban Web is the open standard that changes that.
+      </p>
+      <div class="hero-actions">
+        <a href="#stories" class="btn-primary">See what becomes possible</a>
+        <a href="#precedent" class="btn-ghost">How this has happened before →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       THE PROBLEM
+  ════════════════════════════════════════ -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="problem-text">
+          <div class="section-label">The challenge</div>
+          <h2>Every city has what it needs.<br>None of it connects.</h2>
+          <p>Cities invest in buses, metros, parking systems, and workforce programmes. The demand is there. The intent is real.</p>
+          <p>And yet: a hospital can't offer a patient transport at the moment they book an appointment, because connecting to a transit operator takes a year of custom work. An employer wants to reward green commuting but can only estimate it from surveys. Every one of these problems has the same root — not missing infrastructure, but missing conditions for that infrastructure to connect.</p>
+        </div>
+        <div class="problem-diagram">
+          <div class="prob-diagram-header">
+            <span class="prob-diagram-label">City mobility today</span>
+          </div>
+          <canvas id="problemDiagramCanvas"></canvas>
+          <div class="prob-keywords">
+            <span class="prob-kw">Custom build for every pair.</span>
+            <span class="prob-kw">Built once, for one use.</span>
+            <span class="prob-kw">Full cost, every time.</span>
+            <span class="prob-kw">The city never sees the whole picture.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       THE PRECEDENT
+  ════════════════════════════════════════ -->
+  <section class="precedent" id="precedent">
+    <div class="container">
+      <div class="section-label">This shift has happened before</div>
+      <div class="precedent-intro">
+        <h2>Not building the solution.<br>Building the layer.</h2>
+        <p>Every major infrastructure shift followed the same pattern: not building the thing everyone needed, but building the conditions for anyone to build it.</p>
+      </div>
+
+      <div class="precedent-timeline reveal">
+        <div class="prec-step" data-n="01">
+          <div class="prec-step-title">Internet</div>
+          <p>Not websites. The open standard that let anyone build anything — and reach anyone else.</p>
+        </div>
+        <div class="prec-arrow-cell">→</div>
+        <div class="prec-step" data-n="02">
+          <div class="prec-step-title">GPS</div>
+          <p>Not navigation. The positioning layer that maps, logistics, and ride-hail all grew from.</p>
+        </div>
+        <div class="prec-arrow-cell">→</div>
+        <div class="prec-step" data-n="03">
+          <div class="prec-step-title">Mobile networks</div>
+          <p>Not services. The universal standard that let any device, any provider connect to any other.</p>
+        </div>
+        <div class="prec-arrow-cell">→</div>
+        <div class="prec-step prec-step--highlight" data-n="04">
+          <div class="prec-step-title">Urban Web</div>
+          <p>Not a platform. The open standard that lets any city mobility service connect to any other.</p>
+        </div>
+      </div>
+
+      <p class="prec-conclusion reveal">The network works because the standard is open — not because anyone controls it. <strong>Urban Web brings that shift to cities.</strong></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SIX STORIES
+  ════════════════════════════════════════ -->
+  <section class="use-cases" id="stories">
+    <div class="container">
+      <div class="use-cases-header">
+        <div class="section-label">Six stories</div>
+        <h2 class="section-title">Every city has different priorities.<br>Every city has the same underlying opportunity.</h2>
+      </div>
+
+      <!-- ── STORY 1 — Green Commuting ── -->
+      <div class="use-case" id="uc1" style="--accent:var(--green)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--green">Story 01</div>
+          <h3>When the daily commute becomes a city asset.</h3>
+          <p class="uc-hook">Cities have modal shift targets. Most of the lever sits in the daily commute. What if every employer in your city could run a verified, auditable sustainable commute programme across every transit operator — without a single bilateral agreement? And what if every trip became proof the city could use?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">Follow the journey</span>
+                <div class="step-dots" id="dots1">
+                  <button class="dot active" data-demo="1" data-step="0"></button>
+                  <button class="dot" data-demo="1" data-step="1"></button>
+                  <button class="dot" data-demo="1" data-step="2"></button>
+                </div>
+              </div>
+              <div class="split-screen" id="demo1-screen"></div>
+              <div class="demo-nav">
+                <button class="demo-prev" data-demo="1">← Back</button>
+                <span class="demo-progress" id="demo1-progress">1 / 3</span>
+                <button class="demo-next" data-demo="1">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Employers</strong>
+            <span>Set a commute policy once. Every transit operator in the city enforces it automatically. No bilateral agreements.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Employees</strong>
+            <span>Credits arrive the moment the trip completes. No form, no claim, no admin overhead.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Carbon reporting</strong>
+            <span>Verified trip data flows to registries automatically. Proof, not estimates. Auditable by any framework.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>Track modal shift across all employers and operators. A real evidence base for transport investment.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STORY 2 — Mobility as a Feature ── -->
+      <div class="use-case use-case--alt" id="uc2" style="--accent:var(--blue)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--blue">Story 02</div>
+          <h3>When mobility finds people instead of waiting for them.</h3>
+          <p class="uc-hook">The patient confirming an appointment, the employee seeing a shift, the event-goer buying a ticket — each left to find their own way. What if mobility was already present at the moment the journey was decided, embedded in the platforms people already use?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">See how it works</span>
+                <div class="step-dots" id="dots2">
+                  <button class="dot active" data-demo="2" data-step="0"></button>
+                  <button class="dot" data-demo="2" data-step="1"></button>
+                  <button class="dot" data-demo="2" data-step="2"></button>
+                  <button class="dot" data-demo="2" data-step="3"></button>
+                </div>
+              </div>
+              <div class="phone-wrap">
+                <div class="phone-chrome">
+                  <div class="phone-notch"></div>
+                  <div class="phone-screen" id="demo2-screen"></div>
+                </div>
+              </div>
+              <div class="demo-nav">
+                <button class="demo-prev" data-demo="2">← Back</button>
+                <span class="demo-progress" id="demo2-progress">1 / 4</span>
+                <button class="demo-next" data-demo="2">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Hospitals</strong>
+            <span>Offer transport at the moment of appointment confirmation. Fewer missed appointments. No integration work.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Event organisers</strong>
+            <span>Bundle the transit leg with every ticket sold. Reduce venue congestion, measurably.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Transit operators</strong>
+            <span>Receive demand from every connected service in the city — without negotiating each one separately.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>Stop building platforms. Every hospital, hotel, and retailer becomes a mobility distribution channel.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STORY 3 — Parking ── -->
+      <div class="use-case" id="uc3" style="--accent:var(--amber)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--amber">Story 03</div>
+          <h3>When every parking space becomes a city resource.</h3>
+          <p class="uc-hook">Every city has spaces sitting idle and demand that cannot find them. The supply is there. The connections are not. What if every space — public, private, basement, residential — was visible, bookable, and connected to the city around it?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">See the difference</span>
+                <div class="toggle-group">
+                  <button class="toggle-btn active" id="parking-today-btn">Today</button>
+                  <button class="toggle-btn" id="parking-open-btn">Connected</button>
+                </div>
+              </div>
+              <div class="parking-demo-area">
+                <div class="city-stats-bar" id="cityStatsBar">
+                  <div class="city-stat">
+                    <span class="city-stat-num" id="cStatLoc">6</span>
+                    <span class="city-stat-lbl">locations visible</span>
+                  </div>
+                  <div class="city-stat-sep"></div>
+                  <div class="city-stat">
+                    <span class="city-stat-num" id="cStatSpaces">46</span>
+                    <span class="city-stat-lbl">spaces bookable</span>
+                  </div>
+                  <div class="city-stat-msg" id="cStatMsg">Most of the city is invisible to drivers.</div>
+                </div>
+                <div class="city-map" id="cityMap">
+                  <canvas id="cityMapCanvas"></canvas>
+                </div>
+                <div class="city-type-legend">
+                  <span><i class="tleg-dot" data-type="muni"></i>Municipal</span>
+                  <span><i class="tleg-dot" data-type="office"></i>Private</span>
+                  <span><i class="tleg-dot" data-type="hospital"></i>Hospital</span>
+                  <span><i class="tleg-dot" data-type="ev"></i>EV</span>
+                  <span><i class="tleg-dot" data-type="hotel"></i>Other</span>
+                </div>
+                <div class="space-detail-card" id="spaceDetailCard"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>See all supply and demand in real time. Use dynamic pricing to reduce congestion without owning the spaces.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Property owners</strong>
+            <span>List once. Any driver, any app, any fleet can find them. Revenue arrives without a platform relationship.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Drivers</strong>
+            <span>Every available space near their destination. Live pricing. Reserved before arrival. No circling.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>EV drivers</strong>
+            <span>Parking and charging bookable together as one stop — settled on verified energy delivery.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STORY 4 — Driver Network ── -->
+      <div class="use-case use-case--alt" id="uc4" style="--accent:var(--purple)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--purple">Story 04</div>
+          <h3>When driving becomes aspirational.</h3>
+          <p class="uc-hook">Cities are committing to electric fleets — but the transition depends on whether the workforce is ready. What if a city could see its skills gaps before they become a crisis? What if driving became a career where skill is recognised, rewarded, and worth investing in?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">A credential that travels</span>
+                <div class="step-dots" id="dots4">
+                  <button class="dot active" data-demo="4" data-step="0"></button>
+                  <button class="dot" data-demo="4" data-step="1"></button>
+                  <button class="dot" data-demo="4" data-step="2"></button>
+                  <button class="dot" data-demo="4" data-step="3"></button>
+                </div>
+              </div>
+              <div class="driver-demo-area" id="demo4-screen"></div>
+              <div class="demo-nav">
+                <button class="demo-prev" data-demo="4">← Back</button>
+                <span class="demo-progress" id="demo4-progress">1 / 4</span>
+                <button class="demo-next" data-demo="4">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Drivers</strong>
+            <span>Every qualification and employment record is portable. Skill commands recognition and better pay across every employer.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Operators</strong>
+            <span>Verified candidates discoverable immediately. No certificates to chase. Hire with confidence the same day.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>Workforce readiness visible in aggregate. EV skills gaps identified before they become crises.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Training institutes</strong>
+            <span>Graduates are discoverable by operators searching for their certification from the moment the course completes.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STORY 5 — Public Transport as a Service ── -->
+      <div class="use-case" id="uc5" style="--accent:var(--teal)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--teal">Story 05</div>
+          <h3>When idle city capacity becomes a public resource.</h3>
+          <p class="uc-hook">Every city has a fleet of school buses empty by day, corporate coaches idle on weekends, tourist vehicles parked for months. What if that latent capacity — already paid for — could become part of the city's transit offer, available to any operator, any platform, any commuter?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">Capacity without procurement</span>
+                <div class="step-dots" id="dots5">
+                  <button class="dot active" data-demo="5" data-step="0"></button>
+                  <button class="dot" data-demo="5" data-step="1"></button>
+                  <button class="dot" data-demo="5" data-step="2"></button>
+                  <button class="dot" data-demo="5" data-step="3"></button>
+                </div>
+              </div>
+              <div class="split-screen" id="demo5-screen"></div>
+              <div class="demo-nav">
+                <button class="demo-prev" data-demo="5">← Back</button>
+                <span class="demo-progress" id="demo5-progress">1 / 4</span>
+                <button class="demo-next" data-demo="5">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Fleet owners</strong>
+            <span>Publish available windows once. Any operator or platform can find and book them. Revenue with no sales effort.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>Expand transit capacity without procurement. Use what already exists before buying anything new.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Commuters</strong>
+            <span>Access to more routes, more frequently, at lower cost — without waiting for new infrastructure.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Operators</strong>
+            <span>Fill demand spikes using verified capacity from verified providers. No custom contracts required.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STORY 6 — EV Charging ── -->
+      <div class="use-case use-case--alt" id="uc6" style="--accent:var(--ev)">
+        <div class="uc-header">
+          <div class="uc-tag uc-tag--ev">Story 06</div>
+          <h3>When the city's energy and mobility become one system.</h3>
+          <p class="uc-hook">Every electric vehicle is a battery on wheels. Every office rooftop has solar. Every parked bus fleet is a grid asset waiting to be used. What if every energy asset in the city could find every other — and transact automatically?</p>
+        </div>
+        <div class="uc-content">
+          <div class="uc-demo-wrap">
+            <div class="demo-shell">
+              <div class="demo-shell-header">
+                <span class="demo-shell-title">Energy and mobility connected</span>
+                <div class="step-dots" id="dots6">
+                  <button class="dot active" data-demo="6" data-step="0"></button>
+                  <button class="dot" data-demo="6" data-step="1"></button>
+                  <button class="dot" data-demo="6" data-step="2"></button>
+                  <button class="dot" data-demo="6" data-step="3"></button>
+                </div>
+              </div>
+              <div class="phone-wrap">
+                <div class="phone-chrome">
+                  <div class="phone-notch"></div>
+                  <div class="phone-screen" id="demo6-screen"></div>
+                </div>
+              </div>
+              <div class="demo-nav">
+                <button class="demo-prev" data-demo="6">← Back</button>
+                <span class="demo-progress" id="demo6-progress">1 / 4</span>
+                <button class="demo-next" data-demo="6">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uc-outcomes">
+          <div class="outcome reveal">
+            <strong>Drivers</strong>
+            <span>Every charge point discoverable, bookable, and settled automatically — regardless of operator or network.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Buildings</strong>
+            <span>Solar and battery storage becomes revenue. Export to the grid at peak demand, automatically.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Transit operators</strong>
+            <span>Electric fleets stabilise the grid and generate income while parked, via vehicle-to-grid participation.</span>
+          </div>
+          <div class="outcome reveal">
+            <strong>Cities</strong>
+            <span>Grid investment guided by real usage data. Infrastructure built where it's actually needed — not estimated.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PARTNERS
+  ════════════════════════════════════════ -->
+  <section class="partners" id="partners">
+    <div class="container">
+      <div class="partners-inner">
+        <div class="partner-block reveal">
+          <div class="partner-name nfh-name">Networks for Humanity</div>
+          <p>NFH builds global infrastructure for open value exchange, live across multiple continents. Their shared network powers Urban Web, providing the open standard that any mobility service can connect to.</p>
+        </div>
+        <div class="partner-block reveal">
+          <div class="partner-name wri-name">World Resources Institute</div>
+          <p>WRI works with cities around the world on sustainable transport, climate, and urban policy. They bring city relationships, policy expertise, and on-the-ground research that makes Urban Web work in practice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CONTACT
+  ════════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-text">
+          <div class="section-label">The invitation</div>
+          <h2>The cities that move first shape what comes next.<br><em>The rest inherit what they build.</em></h2>
+          <p>We're speaking with city officials, transport authorities, and urban policy leaders who want to explore what this could mean for their city.</p>
+        </div>
+        <div class="contact-form-wrap">
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label>Your name</label>
+                <input type="text" name="name" placeholder="Name" required>
+              </div>
+              <div class="form-field">
+                <label>City or organisation</label>
+                <input type="text" name="org" placeholder="e.g. City Transport Authority" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Email</label>
+              <input type="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-field">
+              <label>What matters most to your city?</label>
+              <textarea id="msgField" name="message" placeholder="Tell us briefly what you're working on…" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send →</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="success-check">✓</div>
+            <h3>Thank you</h3>
+            <p>We'll be in touch within a few days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="brand_assets/Logo.png" alt="Urban Web" height="28">
+          <p>A program by Networks for Humanity and World Resources Institute</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="#stories">Use cases</a>
+          <a href="#precedent">The precedent</a>
+          <a href="#partners">Partners</a>
+          <a href="#contact">Get in touch</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Urban Web Program</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
