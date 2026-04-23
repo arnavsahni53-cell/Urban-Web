@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Cases — Urban Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fff; --bg-s: #F0F2F5; --text: #1C2B30; --text-2: #4E6268; --text-3: #8FA5AB;
+      --blue: #0078CE; --dark: #07111e;
+      --bd: rgba(28,43,48,0.10); --bd-md: rgba(28,43,48,0.18);
+      --font: 'DM Sans', system-ui, sans-serif; --ease: cubic-bezier(0.2,1,0.3,1); --max: 1160px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; } a { color: inherit; text-decoration: none; } button { font-family: var(--font); cursor: pointer; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: #fff; font-family: var(--font); font-size: 14px; font-weight: 500; padding: 12px 28px; border-radius: 3px; border: 1.5px solid var(--blue); transition: background 0.15s; }
+    .btn-primary:hover { background: #005fa8; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--blue); z-index: 300; }
+
+    /* NAV */
+    .nav { position: fixed; top: 3px; left: 0; right: 0; z-index: 200; height: 56px; display: flex; align-items: center; padding: 0 40px; background: #fff; border-bottom: 2px solid var(--blue); }
+    .nav-inner { max-width: var(--max); width: 100%; margin: 0 auto; display: flex; align-items: center; gap: 32px; }
+    .nav-links { display: flex; gap: 24px; margin-left: auto; }
+    .nav-link { font-size: 13px; color: var(--text-2); transition: color 0.15s; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 3px; margin-left: 8px; transition: background 0.15s; }
+    .btn-nav:hover { background: #005fa8; }
+
+    /* PAGE HEADER */
+    .page-header { background: var(--dark); padding: 100px 40px 72px; margin-top: 59px; }
+    .page-header-inner { max-width: var(--max); margin: 0 auto; }
+    .page-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .page-eyebrow::before { content: ''; width: 24px; height: 1px; background: rgba(255,255,255,0.25); }
+    .page-header h1 { font-size: clamp(28px, 3.8vw, 50px); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; color: #fff; margin-bottom: 18px; }
+    .page-header p { font-size: 17px; color: rgba(255,255,255,0.50); line-height: 1.75; max-width: 520px; }
+
+    /* INTRO */
+    .intro-strip { padding: 44px 0; border-bottom: 1px solid var(--bd); }
+    .intro-strip p { font-size: 16px; color: var(--text-2); line-height: 1.82; max-width: 680px; }
+    .intro-strip strong { color: var(--text); font-weight: 600; }
+
+    /* QUADRANT GRID */
+    .quadrant-section { padding: 48px 0 0; }
+    .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .quadrant { position: relative; padding: 40px 40px 36px; border: 1px solid var(--bd); cursor: pointer; background: var(--bg); transition: background 0.2s var(--ease); overflow: hidden; }
+    .quadrant:nth-child(odd) { border-right: none; }
+    .quadrant:nth-child(1), .quadrant:nth-child(2) { border-bottom: none; }
+    .quadrant::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--q-color, var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
+    .quadrant:hover, .quadrant.active { background: var(--bg-s); }
+    .quadrant:hover::before, .quadrant.active::before { transform: scaleX(1); }
+    .q-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--q-color, var(--blue)); margin-bottom: 16px; }
+    .q-tag::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--q-color, var(--blue)); opacity: 0.6; }
+    .q-scale { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .q-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 18px; }
+    .q-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--bd-md); color: var(--text-3); font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.25s var(--ease); }
+    .quadrant:hover .q-arrow, .quadrant.active .q-arrow { background: var(--q-color, var(--blue)); border-color: var(--q-color, var(--blue)); color: #fff; transform: rotate(90deg); }
+    .quadrant.active .q-arrow { transform: rotate(270deg); }
+    .expand-row { grid-column: 1 / -1; }
+    .expand-panel { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+    .expand-panel.open { max-height: 2000px; border-top: 1px solid var(--bd); }
+    .expand-inner { padding: 52px 40px 60px; border-bottom: 1px solid var(--bd); }
+
+    /* Sub-tabs */
+    .sub-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--bd); margin-bottom: 36px; }
+    .sub-tab { padding: 10px 18px; font-size: 13px; font-weight: 500; color: var(--text-3); background: transparent; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+    .sub-tab.active { color: var(--text); border-bottom-color: var(--q-color, var(--blue)); }
+
+    /* UC layout */
+    .uc-layout { display: flex; flex-direction: column; gap: 36px; }
+    .uc-top { display: grid; grid-template-columns: 1fr 1.1fr; gap: 52px; align-items: start; }
+    .uc-text h3 { font-size: clamp(18px, 2vw, 26px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
+    .uc-text p { font-size: 14px; color: var(--text-2); line-height: 1.82; }
+    .uc-outcomes { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
+    .uc-outcome { padding: 22px 22px; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
+    .uc-outcome-who { font-size: 9px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--q-color, var(--blue)); margin-bottom: 7px; }
+    .uc-outcome p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* DEMO CONTAINER */
+    .demo-wrap { background: var(--dark); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.1); }
+    .demo-hdr { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .demo-hdr-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+    .demo-dots { display: flex; gap: 5px; }
+    .demo-dot { width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.22); background: transparent; padding: 0; cursor: default; transition: all 0.15s; }
+    .demo-dot.active { background: var(--q-color, #0078CE); border-color: var(--q-color, #0078CE); }
+    .demo-body { position: relative; overflow: hidden; height: 320px; }
+    .demo-screen { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s var(--ease); pointer-events: none; overflow-y: auto; }
+    .demo-screen.active { opacity: 1; pointer-events: auto; }
+    .demo-ftr { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .demo-step { font-size: 11px; color: rgba(255,255,255,0.3); }
+    .d-prev, .d-next { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 3px; border: 1.5px solid rgba(255,255,255,0.18); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.15s; font-family: var(--font); }
+    .d-prev:disabled { opacity: 0.28; cursor: not-allowed; }
+    .d-next { background: var(--q-color, #0078CE); border-color: var(--q-color, #0078CE); color: #fff; }
+    .d-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Phone frame */
+    .demo-phone-wrap { display: flex; justify-content: center; padding: 16px; }
+    .demo-phone { max-width: 230px; width: 100%; background: #0d1a2a; border-radius: 20px; padding: 12px 6px; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+    .demo-phone-notch { width: 52px; height: 9px; background: #1a2a3a; border-radius: 20px; margin: 0 auto 8px; }
+    .demo-phone-screen { background: #fff; border-radius: 10px; overflow: hidden; min-height: 300px; }
+
+    /* Split screen */
+    .demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px; min-height: 280px; }
+    .demo-pane { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+    .demo-pane-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.28); padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+    .demo-pane-content { padding: 10px 12px; flex: 1; overflow-y: auto; }
+
+    /* Map toggle */
+    .demo-map-toggle { display: flex; gap: 0; }
+    .demo-toggle-btn { padding: 4px 14px; font-size: 11px; font-weight: 500; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.15s; font-family: var(--font); }
+    .demo-toggle-btn:first-child { border-radius: 3px 0 0 3px; }
+    .demo-toggle-btn:last-child { border-radius: 0 3px 3px 0; border-left: none; }
+    .demo-toggle-btn.active { background: var(--q-color, #0078CE); border-color: var(--q-color, #0078CE); color: #fff; }
+    .demo-map-wrap { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    canvas.parking-canvas { display: block; width: 100%; height: 200px; border-radius: 4px; }
+    .demo-map-stats { display: flex; gap: 8px; }
+    .map-stat { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; padding: 8px 10px; text-align: center; }
+    .map-stat-num { font-size: 20px; font-weight: 700; line-height: 1; margin-bottom: 3px; transition: color 0.4s; }
+    .map-stat-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); }
+
+    /* PARTNERS, CONTACT, FOOTER */
+    .partners { padding: 80px 0; background: var(--bg-s); border-top: 1px solid var(--bd); }
+    .partners-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 44px; }
+    .partners-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+    .partner-logo { height: 48px; width: auto; object-fit: contain; object-position: left; margin-bottom: 20px; }
+    .partner-logo--nfh { filter: brightness(0); opacity: 0.72; }
+    .partner-block p { font-size: 14px; color: var(--text-2); line-height: 1.82; }
+    .contact { padding: 100px 0; background: var(--dark); }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start; }
+    .contact-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .contact-eyebrow::before { content: ''; width: 20px; height: 1px; background: rgba(255,255,255,0.28); }
+    .contact-inner h2 { font-size: clamp(22px, 2.8vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; color: #fff; margin-bottom: 18px; }
+    .contact-inner h2 em { font-style: normal; font-weight: 300; color: rgba(255,255,255,0.42); }
+    .contact-inner > div > p { font-size: 15px; color: rgba(255,255,255,0.48); line-height: 1.8; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-field { display: flex; flex-direction: column; gap: 5px; }
+    .form-field label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .form-field input, .form-field textarea { background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.13); color: #fff; font-family: var(--font); font-size: 14px; padding: 10px 12px; outline: none; resize: vertical; border-radius: 3px; transition: border-color 0.15s; }
+    .form-field input:focus, .form-field textarea:focus { border-color: rgba(255,255,255,0.38); }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.22); }
+    .btn-submit { display: inline-flex; align-items: center; background: #fff; color: var(--text); font-family: var(--font); font-size: 14px; font-weight: 600; padding: 12px 28px; border: none; border-radius: 3px; align-self: flex-start; cursor: pointer; }
+    .btn-submit:hover { background: rgba(255,255,255,0.88); }
+    .form-success { display: none; text-align: center; padding: 48px 20px; }
+    .success-check { width: 44px; height: 44px; border-radius: 50%; background: rgba(45,107,78,0.2); border: 2px solid #2D6B4E; color: #2D6B4E; font-size: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .form-success h3 { color: #fff; font-size: 18px; margin-bottom: 8px; }
+    .form-success p { font-size: 14px; color: rgba(255,255,255,0.48); }
+    .footer { padding: 28px 0; background: rgba(0,0,0,0.88); border-top: 1px solid rgba(255,255,255,0.07); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .footer-brand p { font-size: 12px; color: rgba(255,255,255,0.28); margin-top: 5px; }
+    .footer-partner-logos { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+    .footer-partner-logo { display: block; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.38; }
+    .footer-partner-logo--nfh { height: 18px; } .footer-partner-logo--wri { height: 26px; }
+    .footer-nav { display: flex; gap: 22px; }
+    .footer-nav a { font-size: 13px; color: rgba(255,255,255,0.3); transition: color 0.15s; }
+    .footer-nav a:hover { color: rgba(255,255,255,0.65); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 14px; font-size: 12px; color: rgba(255,255,255,0.2); }
+
+    /* TWEAKS */
+    #tweaksPanel { position: fixed; bottom: 24px; right: 24px; z-index: 500; background: #fff; border: 1px solid var(--bd-md); border-radius: 6px; padding: 20px; width: 232px; box-shadow: 0 8px 32px rgba(0,0,0,0.10); font-family: var(--font); }
+    .tw-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 18px; }
+    .tw-label { font-size: 11px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .tw-swatches { display: flex; gap: 7px; }
+    .tw-swatch { width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid transparent; cursor: pointer; transition: border-color 0.15s, transform 0.15s; padding: 0; }
+    .tw-swatch.active { border-color: var(--text); transform: scale(1.12); }
+    .tw-divider { height: 1px; background: var(--bd); margin: 14px 0; }
+
+    @media (max-width: 1024px) {
+      .uc-top { grid-template-columns: 1fr; gap: 36px; }
+      .uc-outcomes { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; } .nav { padding: 0 20px; }
+      .page-header { padding: 80px 20px 56px; }
+      .quadrant-grid { grid-template-columns: 1fr; }
+      .quadrant:nth-child(odd) { border-right: 1px solid var(--bd); }
+      .quadrant:nth-child(1), .quadrant:nth-child(2) { border-bottom: none; }
+      .expand-inner { padding: 36px 20px 48px; }
+      .demo-split { grid-template-columns: 1fr; }
+      .contact-inner, .partners-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+    @media (max-width: 480px) { .nav-links { display: none; } .uc-outcomes { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="brand_assets/Logo.png" alt="Urban Web" height="28"></a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="urban-web.html" class="nav-link">What is Urban Web</a>
+        <a href="use-cases.html" class="nav-link active">Use Cases</a>
+      </div>
+      <a href="#contact" class="btn-nav">Get in touch</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-eyebrow">Use Cases</div>
+      <h1>How does a city connect<br>to shape what comes next?</h1>
+      <p>Urban Web is the infrastructure of connection. These are the conditions it creates — at every scale of city life.</p>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-strip">
+    <div class="container">
+      <p>Every city has different priorities. But the underlying opportunity is the same: <strong>when mobility services share a common open layer, the value they create compounds.</strong> Click any quadrant to explore what becomes possible.</p>
+    </div>
+  </div>
+
+  <!-- QUADRANT GRID -->
+  <section class="quadrant-section">
+    <div class="container">
+      <div class="quadrant-grid" id="quadrantGrid">
+
+        <div class="quadrant reveal" data-q="individual" style="--q-color:#0078CE">
+          <div class="q-tag">Culture</div>
+          <div class="q-scale">The Individual</div>
+          <div class="q-desc">When mobility is embedded in everyday culture, your city has the choice to move differently.</div>
+          <div class="q-arrow">›</div>
+        </div>
+
+        <div class="quadrant reveal" data-q="organisation" style="--q-color:#2D6B4E">
+          <div class="q-tag">Climate action</div>
+          <div class="q-scale">The Organisation</div>
+          <div class="q-desc">How one company's commute problem becomes every employer's enabler for climate action.</div>
+          <div class="q-arrow">›</div>
+        </div>
+
+        <div class="expand-row">
+          <div class="expand-panel" id="expand-row-1"><div class="expand-inner" id="expand-content-1"></div></div>
+        </div>
+
+        <div class="quadrant reveal" data-q="neighbourhood" style="--q-color:#A0521A">
+          <div class="q-tag">Businesses</div>
+          <div class="q-scale">The Neighbourhood</div>
+          <div class="q-desc">What if the idle assets of your city were its next business opportunity?</div>
+          <div class="q-arrow">›</div>
+        </div>
+
+        <div class="quadrant reveal" data-q="city" style="--q-color:#5B3FA8">
+          <div class="q-tag">Ideas</div>
+          <div class="q-scale">The City's Future</div>
+          <div class="q-desc">What if your city never had to rebuild for what comes next?</div>
+          <div class="q-arrow">›</div>
+        </div>
+
+        <div class="expand-row">
+          <div class="expand-panel" id="expand-row-2"><div class="expand-inner" id="expand-content-2"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="partners" id="partners" style="margin-top:56px">
+    <div class="container">
+      <p class="partners-eyebrow">A program by</p>
+      <div class="partners-inner">
+        <div class="partner-block reveal">
+          <img src="brand_assets/NFH Logo.png" alt="Networks for Humanity" class="partner-logo partner-logo--nfh">
+          <p>Networks for Humanity (NFH) is a global non-profit initiative building open, interoperable and decentralised digital infrastructure. Their shared network powers Urban Web, providing the open standard that any mobility service can connect to.</p>
+        </div>
+        <div class="partner-block reveal">
+          <img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="World Resources Institute" class="partner-logo">
+          <p>WRI is a global research organisation working to improve people's lives, protect nature and stabilise the climate. They bring city relationships, policy expertise, and on-the-ground research that makes Urban Web work in practice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div>
+          <div class="contact-eyebrow">The invitation</div>
+          <h2>The cities that move first shape what comes next.<br><em>The rest inherit what they build.</em></h2>
+          <p>We're speaking with city officials, transport authorities, and urban policy leaders who want to explore what this could mean for their city.</p>
+        </div>
+        <div>
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-field"><label>Your name</label><input type="text" name="name" placeholder="Name" required></div>
+              <div class="form-field"><label>City or organisation</label><input type="text" name="org" placeholder="e.g. City Transport Authority" required></div>
+            </div>
+            <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+            <div class="form-field"><label>What matters most to your city?</label><textarea name="message" placeholder="Tell us briefly…" rows="4"></textarea></div>
+            <button type="submit" class="btn-submit">Send →</button>
+          </form>
+          <div class="form-success" id="formSuccess"><div class="success-check">✓</div><h3>Thank you</h3><p>We'll be in touch within a few days.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="brand_assets/Logo.png" alt="Urban Web" height="26">
+          <p>A program by</p>
+          <div class="footer-partner-logos">
+            <img src="brand_assets/NFH Logo.png" alt="NFH" class="footer-partner-logo footer-partner-logo--nfh">
+            <img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="WRI" class="footer-partner-logo footer-partner-logo--wri">
+          </div>
+        </div>
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="urban-web.html">What is Urban Web</a>
+          <a href="use-cases.html">Use Cases</a>
+          <a href="#contact">Get in touch</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">© 2025 Urban Web Program</div>
+    </div>
+  </footer>
+
+  <!-- TWEAKS -->
+  <div id="tweaksPanel" style="display:none">
+    <div class="tw-title">Tweaks</div>
+    <div><div class="tw-label">Accent colour</div>
+    <div class="tw-swatches">
+      <button class="tw-swatch active" data-color="#0078CE" style="background:#0078CE" title="Urban Blue"></button>
+      <button class="tw-swatch" data-color="#0A7B52" style="background:#0A7B52" title="C40 Green"></button>
+      <button class="tw-swatch" data-color="#006B8F" style="background:#006B8F" title="Civic Teal"></button>
+      <button class="tw-swatch" data-color="#7B3FA8" style="background:#7B3FA8" title="Metro Purple"></button>
+    </div></div>
+  </div>
+
+  <script>
+  /* ── COLOURS ────────────────────────────── */
+  const C = {
+    blue:'#0078CE', green:'#2D6B4E', amber:'#A0521A', purple:'#5B3FA8', teal:'#1B6B7A',
+    text:'#1C2B30', t2:'#4E6268', t3:'#8FA5AB', surf:'#F0F2F5', bd:'rgba(28,43,48,0.10)',
+  };
+
+  /* ── HTML HELPERS ────────────────────────── */
+  const ph = (tag, attrs, ...kids) => `<${tag} ${attrs}>${kids.join('')}</${tag}>`;
+  const hdr = t => `<div style="background:${C.surf};padding:9px 12px;border-bottom:1px solid ${C.bd}"><div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:${C.t3}">${t}</div></div>`;
+  const body = c => `<div style="padding:11px;display:flex;flex-direction:column;gap:8px">${c}</div>`;
+  const card = (c, col) => `<div style="background:${col}0d;border:1px solid ${col}2a;border-radius:3px;padding:10px 11px;display:flex;flex-direction:column;gap:5px">${c}</div>`;
+  const row = (k,v,vc) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid ${C.bd};font-size:11px"><span style="color:${C.t3}">${k}</span><span style="font-weight:600;color:${vc||C.text}">${v}</span></div>`;
+  const btn = (l,col) => `<div style="background:${col};color:#fff;text-align:center;padding:7px 0;border-radius:3px;font-size:11px;font-weight:600;margin-top:4px">${l}</div>`;
+  const pill = (l,col) => `<span style="background:${col}18;color:${col};border:1px solid ${col}40;font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:2px;letter-spacing:0.06em;display:inline-block;margin:1px">${l}</span>`;
+  const chk = (t,col) => `<div style="display:flex;align-items:center;gap:7px;padding:3px 0"><div style="width:5px;height:5px;border-radius:50%;background:${col};flex-shrink:0"></div><span style="font-size:11px;color:${C.text}">${t}</span></div>`;
+  const lbl = (t,col) => `<div style="font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:${col||C.t3};margin-bottom:3px">${t}</div>`;
+  const note = t => `<div style="font-size:11px;color:${C.t2};line-height:1.55">${t}</div>`;
+  // Dark-bg helpers for split screen panes
+  const sph = {
+    lbl: t => `<div style="font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:5px">${t}</div>`,
+    row: (k,v,vc) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:11px"><span style="color:rgba(255,255,255,0.48)">${k}</span><span style="font-weight:600;color:${vc||'rgba(255,255,255,0.88)'}">${v}</span></div>`,
+    note: t => `<div style="font-size:10px;color:rgba(255,255,255,0.42);line-height:1.55;margin-top:6px">${t}</div>`,
+    pill: (l,c) => `<span style="background:${c}28;color:${c};border:1px solid ${c}50;font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:2px;letter-spacing:0.06em;display:inline-block;margin:1px">${l}</span>`,
+  };
+  const dPaneTxt = (col,items) => `<div style="display:flex;flex-direction:column;gap:6px;color:rgba(255,255,255,0.7);font-size:12px">${items.map(i=>`<div style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);line-height:1.5">${i}</div>`).join('')}</div>`;
+
+  /* ── DEMO SCREENS ────────────────────────── */
+  const SCREENS = {
+
+    /* Individual — phone, 3 screens */
+    individual: [
+      hdr('Jazzfest 2025 · Powerhouse Arena') + body(
+        `<div style="display:flex;align-items:center;gap:9px">${card(`<div style="font-size:13px;font-weight:700;color:${C.text}">✓ Ticket confirmed</div><div style="font-size:10px;color:${C.t3}">Fri 14 Nov · 20:00 · Section C</div>`, C.blue)}</div>` +
+        card(lbl('Your event ticket') + `<div style="font-size:12px;font-weight:600;color:${C.text}">Jazzfest Night 2 — Section C</div><div style="font-size:11px;color:${C.blue};font-weight:600">20:00 · Powerhouse Arena, North Gate</div>`, C.blue) +
+        card(lbl('How are you getting there?') + `<div style="font-size:11px;color:${C.t2};line-height:1.55;margin-bottom:5px">Journey options from every operator in your city are ready.</div><div style="font-size:12px;font-weight:600;color:${C.blue}">See journey options →</div>`, C.blue)
+      ),
+      hdr('Getting to Powerhouse Arena · 20:00') + body(
+        `<div style="font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:${C.t3}">Best options tonight</div>` +
+        card(`<div style="display:flex;justify-content:space-between;margin-bottom:7px"><div style="font-size:10px;font-weight:600;color:${C.blue}">Recommended · 38 min</div><div style="font-size:14px;font-weight:700;color:${C.text}">€2.40</div></div>` +
+          `<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:6px"><span style="background:${C.blue};color:#fff;padding:1px 6px;font-size:8px;font-weight:700;border-radius:2px">M3</span><span style="font-size:11px;color:${C.text}">Metro · Central → Arena · 6 stops</span></div><div style="display:flex;align-items:center;gap:6px"><span style="background:${C.t2};color:#fff;padding:1px 6px;font-size:8px;font-weight:700;border-radius:2px">WALK</span><span style="font-size:11px;color:${C.text}">5 min to North Gate</span></div></div>` +
+          btn('Book this journey', C.blue), C.blue) +
+        `<div style="background:${C.surf};border:1px solid ${C.bd};border-radius:3px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:10px;color:${C.t3}">Alternative · 52 min</div><div style="font-size:11px;color:${C.text}">Bus 18 · Direct to arena</div></div><div style="font-size:13px;font-weight:700;color:${C.text}">€1.80</div></div>` +
+        `<div style="font-size:10px;color:${C.t3};text-align:center">Options from Metro, CityBus and 3 others</div>`
+      ),
+      hdr('✓ You\'re all set') + body(
+        card(lbl('Event ticket') + `<div style="font-size:12px;font-weight:600;color:${C.text}">Jazzfest Night 2 · Section C</div><div style="font-size:11px;color:${C.t3}">Fri 14 Nov · 20:00</div>`, C.blue) +
+        card(lbl('Transit ticket',C.green) + `<div style="font-size:12px;font-weight:600;color:${C.text}">Metro M3 · 2 trips</div><div style="font-size:11px;color:${C.green};font-weight:600">Departs 19:14 · Arrives 19:52</div>`, C.green) +
+        chk('Departure reminder set · 19:05', C.green) +
+        `<div style="font-size:11px;color:${C.t3};text-align:center;line-height:1.7;margin-top:4px">One checkout. Two tickets.<br>No separate app. No extra step.</div>`
+      ),
+    ],
+
+    /* Organisation — split, 3 steps */
+    organisation: [
+      { left: { lbl:'City Transport Authority', items:[
+          sph.lbl('Modal shift target') + sph.row('2030 goal','35% on public transit') + sph.row('Current measurement','Unknown','#ff6b6b'),
+          sph.note('Best available data: an annual survey. Most commute trips are invisible.'),
+        ]},
+        right: { lbl:'Employer — Meridian Group', items:[
+          sph.lbl('ESG Commuting Report') + sph.row('Data quality','Estimated only','#D4782A') + sph.row('On transit (est.)','41%') + sph.row('Confidence','Low — survey based','#ff6b6b'),
+          sph.note('No standard way to verify a single trip. Every operator uses a different format.'),
+        ]}},
+      { left: { lbl:'Employer — Meridian Group', items:[
+          sph.lbl('Green commute policy') + '<div style="margin:4px 0">' + sph.pill('Metro',C.blue) + sph.pill('Bus',C.blue) + sph.pill('Tram',C.blue) + sph.pill('Cycle',C.green) + '</div>',
+          sph.row('Reward','£1.20 / km') + sph.row('Applies to','All operators automatically'),
+          sph.note('Published once. Every transit operator in the city picks it up automatically.'),
+        ]},
+        right: { lbl:'Any transit operator', items:[
+          sph.lbl('Received from Urban Web') + sph.row('Policy source','Meridian Group') + sph.row('Status','Active — auto-enforced','#2A9E72') + sph.row('Operators covered','All (14 in city)'),
+          sph.note('No bilateral agreement. No custom integration. One standard.'),
+        ]}},
+      { left: { lbl:'Employee trip — live', items:[
+          sph.lbl('Verified commute') + sph.row('Mode','Bus 47 · 6.1 km') + sph.row('Employer','Meridian Group') + sph.row('Credit awarded','£7.32','#2A9E72') + sph.row('Carbon offset','1.4 kg CO₂','#2A9E72'),
+        ]},
+        right: { lbl:'City Transport Authority', items:[
+          sph.lbl('Modal shift — now visible') + sph.row('On public transit','48%','#2A9E72') + sph.row('Data quality','Verified trips') + sph.row('Employers reporting','312'),
+          sph.note('Real evidence base. Built from trips, not surveys.'),
+        ]}},
+    ],
+
+    /* Parking — handled separately via canvas */
+
+    /* Unlocking Capacity — phone, 4 screens */
+    capacity: [
+      hdr('City fleet inventory') + body(
+        `<div style="font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:${C.t3};margin-bottom:6px">Idle assets — today</div>` +
+        card(`${lbl('School buses · 23 vehicles')}${row('Active window','07:00 – 09:00, 15:00 – 17:00')}${row('Idle','09:00 – 14:30',C.amber)}${row('Visible to city','No','#C0392B')}`, C.amber) +
+        card(`${lbl('Corporate coaches · 8 vehicles')}${row('Idle window','Weekends + evenings')}${row('Visible to city','No','#C0392B')}`, C.amber) +
+        `<div style="font-size:10px;color:${C.t3};line-height:1.55;margin-top:4px">31 vehicles. Paid for. Invisible to the city and its residents.</div>`
+      ),
+      hdr('Joining Urban Web') + body(
+        card(`${lbl('School bus fleet — now connected')}${row('Connection','Urban Web standard')}${row('Availability published','09:00 – 14:30 daily')}${row('Visible to','Any operator or platform')}`, C.green) +
+        chk('Joined once — no bilateral agreements', C.green) +
+        chk('Any operator can discover and book', C.green) +
+        chk('Revenue generated during idle hours', C.green) +
+        `<div style="font-size:10px;color:${C.green};line-height:1.55;margin-top:4px">One connection. City-wide discoverability. No integration work.</div>`
+      ),
+      hdr('Demand matched') + body(
+        card(`${lbl('Transit operator request')}${row('Route gap','Central → Tech Park · 09:15–11:00')}${row('Capacity needed','28 seats')}${row('Found via Urban Web','School bus fleet',C.green)}${row('Booked in','< 4 minutes',C.green)}`, C.green) +
+        btn('Capacity confirmed', C.green) +
+        `<div style="font-size:10px;color:${C.t3};line-height:1.55;margin-top:6px">No new vehicle. No procurement. No contract negotiation.</div>`
+      ),
+      hdr('City mobility expanded') + body(
+        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">` +
+        `<div style="background:${C.green}0d;border:1px solid ${C.green}2a;border-radius:3px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:${C.green}">0</div><div style="font-size:9px;text-transform:uppercase;color:${C.t3};letter-spacing:0.07em">New vehicles</div></div>` +
+        `<div style="background:${C.green}0d;border:1px solid ${C.green}2a;border-radius:3px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:${C.green}">31</div><div style="font-size:9px;text-transform:uppercase;color:${C.t3};letter-spacing:0.07em">New routes</div></div></div>` +
+        `<div style="font-size:11px;color:${C.t2};line-height:1.65">First and last mile gaps closed using assets the city already owned. The city gains transit capacity without procurement.</div>`
+      ),
+    ],
+
+    /* Portable Credentials — phone, 3 screens */
+    transition: [
+      hdr('Driver profile · Marcus B.') + body(
+        card(`${lbl('Verified credentials')}${chk('Class D Commercial licence — verified', C.green)}${chk('EV Level 2 certification — 2024', C.green)}${chk('Defensive driving — 5 yrs', C.green)}`, C.green) +
+        card(`${lbl('Employment history')}${row('CityLine Transit','2019 – 2023')}${row('MetroBus Co','2023 – present')}`, C.t2) +
+        `<div style="font-size:10px;color:${C.t3};line-height:1.55;margin-top:4px">All records verified on Urban Web. Portable across every employer in every city.</div>`
+      ),
+      hdr('Changing employer') + body(
+        card(`${lbl('Record transfer')}${row('From','MetroBus Co')}${row('To','GreenFleet Transit')}${row('Status','Instant — no paperwork',C.green)}${row('Credentials','All verified, all portable')}`, C.green) +
+        chk('No certificates to chase', C.green) +
+        chk('No gaps in employment history', C.green) +
+        chk('EV certification visible immediately', C.green) +
+        `<div style="font-size:10px;color:${C.green};line-height:1.55;margin-top:4px">The record travels with the driver. Not with the employer.</div>`
+      ),
+      hdr('City skills dashboard') + body(
+        `<div style="font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:${C.t3};margin-bottom:6px">EV workforce readiness</div>` +
+        card(`${row('EV certified drivers','2,840',C.green)}${row('EV fleet target by 2027','4,200')}${row('Skills gap','1,360 drivers',C.amber)}${row('Training institutes linked','14')}`, C.purple) +
+        `<div style="font-size:10px;color:${C.t3};line-height:1.55;margin-top:4px">The city sees its workforce gap before it becomes a crisis — not after.</div>`
+      ),
+    ],
+
+    /* Energy — split, 3 steps */
+    energy: [
+      { left: { lbl:'EV driver · Any charger', items:[
+          sph.lbl('Charging session') + sph.row('Charger network','GridPower (any network)') + sph.row('Energy delivered','28.4 kWh') + sph.row('Settled automatically','£6.20','#2A9E72'),
+          sph.note('Any charger. Any network. One standard. No account required at each provider.'),
+        ]},
+        right: { lbl:'Charge point operator', items:[
+          sph.lbl('Session logged') + sph.row('Verified energy','28.4 kWh') + sph.row('Driver','Anonymous — privacy preserved') + sph.row('Revenue','Settled within seconds','#2A9E72'),
+          sph.note('No custom billing integration. Settlement is automatic via the open standard.'),
+        ]}},
+      { left: { lbl:'Electric bus fleet · Overnight', items:[
+          sph.lbl('Vehicle-to-grid export') + sph.row('Fleet size','42 buses') + sph.row('Grid export window','23:00 – 05:00') + sph.row('Energy exported','1,240 kWh') + sph.row('Revenue generated','£186','#2A9E72'),
+        ]},
+        right: { lbl:'City grid operator', items:[
+          sph.lbl('Peak demand managed') + sph.row('Buses contributing','42 / 42') + sph.row('Grid stress avoided','Yes','#2A9E72') + sph.row('Peaker plant avoided','Yes','#2A9E72'),
+          sph.note('The fleet stabilises the grid and generates income while parked.'),
+        ]}},
+      { left: { lbl:'City energy authority', items:[
+          sph.lbl('Investment guided by real data') + sph.row('Chargers needed: East','42 (actual usage)') + sph.row('Chargers needed: West','18 (actual usage)') + sph.row('Estimated (old method)','60 (both areas)'),
+          sph.note('Infrastructure built where it\'s actually needed. Not where demand was estimated.'),
+        ]},
+        right: { lbl:'Solar building · Office park', items:[
+          sph.lbl('Energy export') + sph.row('Solar generated','340 kWh today') + sph.row('Consumed on-site','180 kWh') + sph.row('Exported to grid','160 kWh','#2A9E72') + sph.row('Revenue','£28.80','#2A9E72'),
+        ]}},
+    ],
+  };
+
+  /* ── USE CASE DATA ────────────────────────── */
+  const UC = {
+    individual: {
+      color:'#0078CE', row:1, demoType:'phone', demoKey:'individual', demoLabel:'See how it works',
+      title:'When mobility finds people instead of waiting for them.',
+      body:'A concert app that sells tickets and already knows how you\'re getting there. A hospital system that confirms your appointment and your ride in the same moment. Every platform in your city able to offer every transit operator as part of what they already do.',
+      outcomes:[
+        {who:'Hospitals',what:'Offer transport at the moment of appointment confirmation. Fewer missed appointments. No integration work.'},
+        {who:'Event organisers',what:'Bundle the transit leg with every ticket sold. Reduce venue congestion, measurably.'},
+        {who:'Transit operators',what:'Receive demand from every connected service in the city — without negotiating each one separately.'},
+        {who:'Cities',what:'Every hospital, hotel, and retailer becomes a mobility distribution channel.'},
+      ],
+    },
+    organisation: {
+      color:'#2D6B4E', row:1, demoType:'split', demoKey:'organisation', demoLabel:'Follow the journey',
+      title:'When the daily commute becomes a city asset.',
+      body:'Cities set modal shift targets but can\'t see them clearly, measure them reliably, or act on them at scale. On Urban Web, solving the commute problem once makes the same capability available to every employer in the city. Every trip becomes verified proof.',
+      outcomes:[
+        {who:'Employers',what:'Set a commute policy once. Every transit operator in the city enforces it automatically. No bilateral agreements.'},
+        {who:'Employees',what:'Credits arrive the moment the trip completes. No form, no claim, no admin overhead.'},
+        {who:'Carbon reporting',what:'Verified trip data flows to registries automatically. Proof, not estimates.'},
+        {who:'Cities',what:'Track modal shift across all employers and operators. A real evidence base for transport investment.'},
+      ],
+    },
+    neighbourhood: {
+      color:'#A0521A', row:2,
+      subCases:[
+        {
+          label:'Unlocking Space', demoType:'parking', demoLabel:'See the difference',
+          title:'When every parking space becomes a city resource.',
+          body:'Cities have parking spaces locked inside private platform inventories, or invisible to any digital system. Drivers circle. Demand and supply exist in the same city but cannot find each other.',
+          outcomes:[
+            {who:'Cities',what:'See all supply and demand in real time. Dynamic pricing to reduce congestion without owning the spaces.'},
+            {who:'Property owners',what:'List once. Any driver, any app, any fleet can find them. Revenue without a platform relationship.'},
+            {who:'Drivers',what:'Every available space near their destination. Live pricing. Reserved before arrival. No circling.'},
+            {who:'EV drivers',what:'Parking and charging bookable together — settled on verified energy delivery.'},
+          ],
+        },
+        {
+          label:'Unlocking Capacity', demoType:'phone', demoKey:'capacity', demoLabel:'Capacity without procurement',
+          title:'When idle vehicles become city transit.',
+          body:'School buses empty by day. Corporate coaches idle on weekends. Outside their primary purpose, they are invisible to the city. What if every vehicle could be discoverable and responsive to any demand?',
+          outcomes:[
+            {who:'Fleet owners',what:'Publish available windows once. Any operator or platform can find and book them.'},
+            {who:'Cities',what:'Expand transit capacity without procurement. Use what already exists before buying anything new.'},
+            {who:'Commuters',what:'More routes, more frequently — without waiting for new infrastructure.'},
+            {who:'Operators',what:'Fill demand spikes using verified capacity from verified providers. No custom contracts.'},
+          ],
+        },
+      ],
+    },
+    city: {
+      color:'#5B3FA8', row:2,
+      subCases:[
+        {
+          label:'Portable Credentials', demoType:'phone', demoKey:'transition', demoLabel:'A credential that travels',
+          title:'When driving becomes a career that travels with you.',
+          body:'Cities committing to electric fleets face a risk they cannot see — whether the workforce will be ready when the vehicles arrive. What if every driver\'s verified record travelled with them — visible to every operator, across every city?',
+          outcomes:[
+            {who:'Drivers',what:'Every qualification and employment record is portable. Skill commands recognition across every employer.'},
+            {who:'Operators',what:'Verified candidates discoverable immediately. No certificates to chase. Hire with confidence the same day.'},
+            {who:'Cities',what:'Workforce readiness visible in aggregate. EV skills gaps identified before they become crises.'},
+            {who:'Training institutes',what:'Graduates discoverable by operators from the moment the course completes.'},
+          ],
+        },
+        {
+          label:'Energy Transition', demoType:'split', demoKey:'energy', demoLabel:'Energy and mobility connected',
+          title:'When the city\'s energy and mobility become one system.',
+          body:'Every electric vehicle is a battery on wheels. Every office rooftop has solar. Every parked bus fleet is a grid asset waiting to be used. What if the infrastructure built for mobility was already the infrastructure for energy?',
+          outcomes:[
+            {who:'Drivers',what:'Every charge point discoverable, bookable, and settled automatically regardless of operator or network.'},
+            {who:'Buildings',what:'Solar and battery storage becomes revenue. Export to the grid at peak demand, automatically.'},
+            {who:'Transit operators',what:'Electric fleets stabilise the grid and generate income while parked, via vehicle-to-grid.'},
+            {who:'Cities',what:'Grid investment guided by real usage data. Infrastructure built where it\'s actually needed.'},
+          ],
+        },
+      ],
+    },
+  };
+
+  /* ── RENDER HELPERS ─────────────────────── */
+  function demoWrap(uc, innerHTML, n, color) {
+    const label = uc.demoLabel || 'See how it works';
+    const dots = Array.from({length:n},(_,i)=>`<button class="demo-dot${i===0?' active':''}" data-i="${i}"></button>`).join('');
+    return `<div class="demo-wrap" style="--q-color:${color}">
+      <div class="demo-hdr"><span class="demo-hdr-lbl">${label}</span><div class="demo-dots">${dots}</div></div>
+      <div class="demo-body">${innerHTML}</div>
+      ${n>1?`<div class="demo-ftr"><button class="d-prev" disabled>← Back</button><span class="demo-step">1 / ${n}</span><button class="d-next">Next →</button></div>`:''}
+    </div>`;
+  }
+
+  function renderPhone(uc, color) {
+    const screens = SCREENS[uc.demoKey];
+    if (!screens) return '';
+    const screenDivs = screens.map((s,i)=>`<div class="demo-screen${i===0?' active':''}" data-s="${i}"><div class="demo-phone-wrap"><div class="demo-phone"><div class="demo-phone-notch"></div><div class="demo-phone-screen">${s}</div></div></div></div>`).join('');
+    return demoWrap(uc, screenDivs, screens.length, color);
+  }
+
+  function renderSplit(uc, color) {
+    const steps = SCREENS[uc.demoKey];
+    if (!steps) return '';
+    const screenDivs = steps.map((s,i)=>{
+      const lc = `<div class="demo-pane"><div class="demo-pane-label">${s.left.lbl}</div><div class="demo-pane-content">${dPaneTxt(color, s.left.items)}</div></div>`;
+      const rc = `<div class="demo-pane"><div class="demo-pane-label">${s.right.lbl}</div><div class="demo-pane-content">${dPaneTxt(color, s.right.items)}</div></div>`;
+      return `<div class="demo-screen${i===0?' active':''}" data-s="${i}"><div class="demo-split">${lc}${rc}</div></div>`;
+    }).join('');
+    return demoWrap(uc, screenDivs, steps.length, color);
+  }
+
+  function renderParking(color) {
+    return `<div class="demo-wrap" style="--q-color:${color}">
+      <div class="demo-hdr">
+        <span class="demo-hdr-lbl">See the difference</span>
+        <div class="demo-map-toggle"><button class="demo-toggle-btn active" data-state="today">Today</button><button class="demo-toggle-btn" data-state="connected">Connected</button></div>
+      </div>
+      <div class="demo-body"><div class="demo-map-wrap">
+        <div class="demo-map-stats">
+          <div class="map-stat"><div class="map-stat-num" id="mapLoc" style="color:${color}">6</div><div class="map-stat-lbl">Locations</div></div>
+          <div class="map-stat"><div class="map-stat-num" id="mapSpaces" style="color:${color}">46</div><div class="map-stat-lbl">Spaces bookable</div></div>
+          <div class="map-stat" style="flex:2"><div id="mapMsg" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5;margin-top:6px">Most supply is invisible to drivers today.</div></div>
+        </div>
+        <canvas class="parking-canvas" id="parkingCanvas"></canvas>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.4)"><span style="width:7px;height:7px;border-radius:50%;background:#2A8FE0;display:inline-block"></span>Municipal</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.4)"><span style="width:7px;height:7px;border-radius:50%;background:#D4782A;display:inline-block"></span>Private</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.4)"><span style="width:7px;height:7px;border-radius:50%;background:#C0392B;display:inline-block"></span>Hospital</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.4)"><span style="width:7px;height:7px;border-radius:50%;background:#2A9E72;display:inline-block"></span>EV</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.4)"><span style="width:7px;height:7px;border-radius:50%;background:#7B60D0;display:inline-block"></span>Hotel</span>
+        </div>
+      </div></div>
+    </div>`;
+  }
+
+  function renderDemo(uc, color) {
+    if (!uc.demoType) return '';
+    if (uc.demoType === 'phone') return renderPhone(uc, color);
+    if (uc.demoType === 'split') return renderSplit(uc, color);
+    if (uc.demoType === 'parking') return renderParking(color);
+    return '';
+  }
+
+  function renderUC(uc, color) {
+    const outcomes = uc.outcomes.map(o=>`<div class="uc-outcome" style="--q-color:${color}"><div class="uc-outcome-who">${o.who}</div><p>${o.what}</p></div>`).join('');
+    const demo = renderDemo(uc, color);
+    return `<div class="uc-layout">
+      <div class="uc-top">
+        <div class="uc-text"><h3>${uc.title}</h3><p>${uc.body}</p></div>
+        <div>${demo}</div>
+      </div>
+      <div class="uc-outcomes" style="--q-color:${color}">${outcomes}</div>
+    </div>`;
+  }
+
+  function renderExpand(key) {
+    const uc = UC[key];
+    if (uc.subCases) {
+      const tabs = uc.subCases.map((s,i)=>`<button class="sub-tab${i===0?' active':''}" data-sub="${i}" style="--q-color:${uc.color}">${s.label}</button>`).join('');
+      const panels = uc.subCases.map((s,i)=>`<div class="sub-panel" data-sub="${i}" style="display:${i===0?'block':'none'}">${renderUC(s, uc.color)}</div>`).join('');
+      return `<div class="sub-tabs">${tabs}</div>${panels}`;
+    }
+    return renderUC(uc, uc.color);
+  }
+
+  /* ── QUADRANT INTERACTION ──────────────── */
+  let activeQ = null;
+  document.querySelectorAll('.quadrant').forEach(q => {
+    q.addEventListener('click', () => {
+      const key = q.dataset.q;
+      const row = UC[key].row;
+      const panel = document.getElementById('expand-row-' + row);
+      const content = document.getElementById('expand-content-' + row);
+      if (activeQ === key) {
+        panel.classList.remove('open');
+        q.classList.remove('active');
+        activeQ = null; return;
+      }
+      document.querySelectorAll('.quadrant').forEach(oq => { if (UC[oq.dataset.q]?.row === row) oq.classList.remove('active'); });
+      content.innerHTML = renderExpand(key);
+      panel.classList.add('open');
+      q.classList.add('active');
+      activeQ = key;
+      initDemoNavs(content);
+      if (key === 'neighbourhood' || key === 'city') {
+        content.querySelectorAll('.sub-tab').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = btn.dataset.sub;
+            content.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            content.querySelectorAll('.sub-panel').forEach(p => { p.style.display = p.dataset.sub === idx ? 'block' : 'none'; });
+            initDemoNavs(content);
+          });
+        });
+      }
+      initParkingCanvas();
+    });
+  });
+
+  /* ── DEMO NAV ────────────────────────── */
+  function initDemoNavs(root) {
+    root.querySelectorAll('.demo-wrap').forEach(wrap => {
+      const screens = wrap.querySelectorAll('.demo-screen');
+      const dots = wrap.querySelectorAll('.demo-dot');
+      const prev = wrap.querySelector('.d-prev');
+      const next = wrap.querySelector('.d-next');
+      const stepEl = wrap.querySelector('.demo-step');
+      let cur = 0;
+      function go(i) {
+        screens[cur].classList.remove('active'); dots[cur].classList.remove('active');
+        cur = Math.max(0, Math.min(i, screens.length - 1));
+        screens[cur].classList.add('active'); dots[cur].classList.add('active');
+        if (stepEl) stepEl.textContent = `${cur+1} / ${screens.length}`;
+        if (prev) prev.disabled = cur === 0;
+        if (next) next.disabled = cur === screens.length - 1;
+      }
+      if (prev) prev.addEventListener('click', () => go(cur - 1));
+      if (next) next.addEventListener('click', () => go(cur + 1));
+      dots.forEach((d,i) => d.addEventListener('click', () => go(i)));
+    });
+  }
+
+  /* ── PARKING CANVAS ──────────────────── */
+  const SPOTS_TODAY = [
+    {x:.15,y:.22,type:'muni'},{x:.42,y:.18,type:'muni'},{x:.70,y:.28,type:'muni'},
+    {x:.25,y:.62,type:'muni'},{x:.55,y:.72,type:'muni'},{x:.80,y:.58,type:'muni'},
+  ];
+  const SPOTS_CONNECTED = [
+    ...SPOTS_TODAY,
+    {x:.34,y:.38,type:'office'},{x:.62,y:.45,type:'office'},{x:.18,y:.80,type:'office'},
+    {x:.50,y:.32,type:'hospital'},{x:.78,y:.76,type:'hospital'},
+    {x:.88,y:.38,type:'ev'},{x:.08,y:.50,type:'ev'},{x:.45,y:.85,type:'ev'},
+    {x:.30,y:.52,type:'hotel'},{x:.72,y:.18,type:'hotel'},
+    {x:.10,y:.25,type:'muni'},{x:.90,y:.65,type:'muni'},
+    {x:.58,y:.60,type:'office'},{x:.22,y:.40,type:'ev'},
+  ];
+  const SPOT_COLORS = {muni:'#2A8FE0', office:'#D4782A', hospital:'#C0392B', ev:'#2A9E72', hotel:'#7B60D0'};
+  let parkingState = 'today', parkingRaf = null, parkingRevealT = 0;
+
+  function initParkingCanvas() {
+    const canvas = document.getElementById('parkingCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    canvas.width = w*dpr; canvas.height = h*dpr;
+    ctx.scale(dpr, dpr);
+
+    // City grid
+    function drawGrid() {
+      ctx.fillStyle = '#0d1a2a'; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
+      const bw = w/7, bh = h/5;
+      for (let r=0;r<5;r++) for (let c=0;c<7;c++) {
+        const bx = c*bw + bw*.1, by = r*bh + bh*.1;
+        const bW = bw*.7, bH = bh*.7;
+        if ((r+c)%3 !== 0) ctx.fillRect(bx, by, bW, bH);
+      }
+    }
+
+    function drawSpots(spots, alphas) {
+      spots.forEach((s,i) => {
+        const a = alphas ? alphas[i] : 1;
+        if (a <= 0) return;
+        const nx = s.x*w, ny = s.y*h, col = SPOT_COLORS[s.type];
+        ctx.save(); ctx.globalAlpha = a;
+        ctx.shadowColor = col; ctx.shadowBlur = 12;
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(nx,ny,5,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+        ctx.save(); ctx.globalAlpha = a*0.2;
+        ctx.strokeStyle = col; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.arc(nx,ny,9,0,Math.PI*2); ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    function render(ts) {
+      ctx.clearRect(0,0,w,h); drawGrid();
+      if (parkingState === 'today') {
+        drawSpots(SPOTS_TODAY, null);
+      } else {
+        parkingRevealT = Math.min(parkingRevealT + 0.025, 1);
+        const alphas = SPOTS_CONNECTED.map((_,i) => {
+          if (i < SPOTS_TODAY.length) return 1;
+          const delay = (i - SPOTS_TODAY.length) / (SPOTS_CONNECTED.length - SPOTS_TODAY.length);
+          return Math.max(0, Math.min((parkingRevealT - delay*0.6)/0.4, 1));
+        });
+        drawSpots(SPOTS_CONNECTED, alphas);
+      }
+      parkingRaf = requestAnimationFrame(render);
+    }
+    if (parkingRaf) cancelAnimationFrame(parkingRaf);
+    render(0);
+
+    // Toggle buttons
+    document.querySelectorAll('.demo-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.demo-toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        parkingState = btn.dataset.state;
+        if (parkingState === 'connected') parkingRevealT = 0;
+        const loc = document.getElementById('mapLoc');
+        const sp = document.getElementById('mapSpaces');
+        const msg = document.getElementById('mapMsg');
+        if (parkingState === 'today') {
+          if(loc){loc.textContent='6';loc.style.color=C.amber;}
+          if(sp){sp.textContent='46';sp.style.color=C.amber;}
+          if(msg)msg.textContent='Most supply is invisible to drivers today.';
+        } else {
+          if(loc){loc.textContent='22';loc.style.color=C.green;}
+          if(sp){sp.textContent='400+';sp.style.color=C.green;}
+          if(msg)msg.textContent='Every space in the city — discoverable and bookable.';
+        }
+      });
+    });
+  }
+
+  /* ── SCROLL REVEAL ───────────────────── */
+  const ioRev = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ioRev.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => ioRev.observe(el));
+
+  /* ── CONTACT FORM ────────────────────── */
+  const form = document.getElementById('contactForm');
+  if (form) form.addEventListener('submit', e => { e.preventDefault(); form.style.display='none'; document.getElementById('formSuccess').style.display='block'; });
+
+  /* ── TWEAKS ──────────────────────────── */
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accentColor": "#0078CE"
+  }/*EDITMODE-END*/;
+  function applyTweaks(t) {
+    document.documentElement.style.setProperty('--blue', t.accentColor);
+    document.querySelectorAll('.tw-swatch').forEach(s => s.classList.toggle('active', s.dataset.color === t.accentColor));
+  }
+  applyTweaks(TWEAK_DEFAULTS);
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaksPanel').style.display = 'block';
+    if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaksPanel').style.display = 'none';
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.tw-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        TWEAK_DEFAULTS.accentColor = btn.dataset.color;
+        applyTweaks(TWEAK_DEFAULTS);
+        window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { accentColor: btn.dataset.color } }, '*');
+      });
+    });
+  });
+  </script>
+</body>
+</html>
