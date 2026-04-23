@@ -296,8 +296,10 @@
     }
     .partners-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
     .partner-block { }
-    .partner-logo { height: 48px; width: auto; object-fit: contain; object-position: left; margin-bottom: 20px; }
+    .partner-logo { height: 48px; width: auto; object-fit: contain; object-position: left; margin-bottom: 20px; transition: opacity 0.2s, transform 0.2s; }
     .partner-logo--nfh { filter: brightness(0); opacity: 0.72; }
+    a:has(.partner-logo):hover .partner-logo { opacity: 1; transform: translateY(-2px); }
+    a:has(.partner-logo--nfh):hover .partner-logo--nfh { opacity: 1; }
     .partner-block p { font-size: 14px; color: var(--text-2); line-height: 1.82; }
 
     /* ── CONTACT ────────────────────────────── */
@@ -514,11 +516,11 @@
       <p class="partners-eyebrow">A program by</p>
       <div class="partners-inner">
         <div class="partner-block reveal">
-          <img src="brand_assets/NFH Logo.png" alt="Networks for Humanity" class="partner-logo partner-logo--nfh">
+          <a href="https://networksforhumanity.org" target="_blank" rel="noopener"><img src="brand_assets/NFH Logo.png" alt="Networks for Humanity" class="partner-logo partner-logo--nfh"></a>
           <p>Networks for Humanity (NFH) is a global non-profit initiative building open, interoperable and decentralised digital infrastructure that enables broader access and participation in the digital economy. Their shared network powers Urban Web, providing the open standard that any mobility service can connect to.</p>
         </div>
         <div class="partner-block reveal">
-          <img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="World Resources Institute" class="partner-logo">
+          <a href="https://wri.org" target="_blank" rel="noopener"><img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="World Resources Institute" class="partner-logo"></a>
           <p>WRI is a global research organisation working to improve people's lives, protect nature and stabilise the climate by leveraging data, expertise and global reach to influence policy and catalyse change. They bring city relationships, policy expertise, and on-the-ground research that makes Urban Web work in practice.</p>
         </div>
       </div>
@@ -574,8 +576,8 @@
           <img src="brand_assets/Logo.png" alt="Urban Web" height="26">
           <p>A program by</p>
           <div class="footer-partner-logos">
-            <img src="brand_assets/NFH Logo.png" alt="Networks for Humanity" class="footer-partner-logo footer-partner-logo--nfh">
-            <img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="World Resources Institute" class="footer-partner-logo footer-partner-logo--wri">
+            <a href="https://networksforhumanity.org" target="_blank" rel="noopener"><img src="brand_assets/NFH Logo.png" alt="Networks for Humanity" class="footer-partner-logo footer-partner-logo--nfh"></a>
+            <a href="https://wri.org" target="_blank" rel="noopener"><img src="brand_assets/World_Resources_Institute_logo.svg.png" alt="World Resources Institute" class="footer-partner-logo footer-partner-logo--wri"></a>
           </div>
         </div>
         <nav class="footer-nav">
