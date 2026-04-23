@@ -629,7 +629,6 @@
         const nx2=cx+Math.cos(a)*rR, ny2=cy+Math.sin(a)*rR;
         const isFocus=i===0;
         drawNode(ctx,nx2,ny2,isFocus?11:9,n.col,n.label,isFocus?1:0.45+pulse*0.3,isFocus?1.8:0.4+pulse*0.5);
-        if(isFocus){ctx.fillStyle='#fff';ctx.font='600 8px DM Sans,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('Tr',nx2,ny2);}
       });
       t++; rafs[2]=requestAnimationFrame(draw);
     }
